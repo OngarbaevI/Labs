@@ -9,8 +9,8 @@
 
 void main(int argc, char* argv[]) {
     //задаем имя асинхронного симофоров
-    char *semOneName = "/sem1"; 
-    char *semTwoName = "/sem2";
+    char semOneName = "/sem1"; 
+    char semTwoName = "/sem2";
     //создаем асинхронные симафоры 
     sem_t *sem1 = sem_open(semOneName, O_CREAT | O_EXCL, O_RDWR, 0); //!
     sem_t *sem2 = sem_open(semTwoName, O_CREAT | O_EXCL, O_RDWR, 1); //!
@@ -25,7 +25,7 @@ void main(int argc, char* argv[]) {
             sem_post(sem2);                             //увеличивает значение семафора на единицу и возобновляет выполнение любых потоков
         }
 
-        }
+        
     }
     else {
         for(int i = 0; i < 3; i++){
@@ -39,3 +39,5 @@ void main(int argc, char* argv[]) {
     //обязательно для того чтобы не тратить память
     sem_unlink(semOneName);
     sem_unlink(semTwoName);
+    retern 0;
+}
