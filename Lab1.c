@@ -5,22 +5,22 @@
 #include <malloc.h>
 int main(void)
 {
-    int fd; 
-    fd=open("test.txt", O_RDONLY); 
+    int fd; //пременная для передачи кода ошибки
+    fd=open("test.txt", O_RDONLY); // 
      if(fd==-1) {
         printf("Невозможно открыть файл\n");
         exit(1);
     }
-    int charNum = lseek(fd, 0, SEEK_END);
-    lseek (fd, 0, SEEK_SET);
-    char buf[charNum];
-    read(fd, buf, charNum);
-    int stringCounter = 0;
-    for (int i = 0; i < charNum; i++)
+    int charNum = lseek(fd, 0, SEEK_END);// считаем символы
+    lseek (fd, 0, SEEK_SET);    // встаем на нулевой символ
+    char buf[charNum];          // создаес массив симолов переноса строки
+    read(fd, buf, charNum);     //  читаем 
+    int stringCounter = 0;      // счетчик строк
+    for (int i = 0; i < charNum; i++) // ищем перенос строк
     {
         if (buf[i]=='\n')
-            stringCounter++;
-        printf("%c", buf[i]);
+            stringCounter++; //
+        printf("%c", buf[i]);//пишем 
     }
     int stringBeginPos[stringCounter];
     stringBeginPos[0] = 0;
