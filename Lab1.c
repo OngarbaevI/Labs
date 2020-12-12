@@ -22,30 +22,30 @@ int main(void)
             stringCounter++; //
         printf("%c", buf[i]);//пишем 
     }
-    int stringBeginPos[stringCounter];
-    stringBeginPos[0] = 0;
-    int localStringCounter = 1;
+    int stringBeginPos[stringCounter]; // Переменная начала строки
+    stringBeginPos[0] = 0; // Переменная начала позиции
+    int localStringCounter = 1; // Локальная перемена счетчика
     for (int i=0; i < charNum; i++)
     {
-        if ((buf[i]=='\n')  )
+        if ((buf[i]=='\n')  ) // Если мы находим новую строку,то 
         {
-            stringBeginPos[localStringCounter++] = i + 1;
-        }    
+            stringBeginPos[localStringCounter++] = i + 1;Устанавилваем начало строки
+        }
     }
 
-    int choosenString = 1;
-    while (0==0)
+    int choosenString = 1; // переменная выбранной строки
+    while (0==0) // Пока бесконечность
     {
-    
-        scanf("%d", &choosenString);
-        if (choosenString == 0)
+
+        scanf("%d", &choosenString); // Считываем нужную нам строку для вывода
+        if (choosenString == 0) // Если строка нулевая то, вводим другую 
             break;
         if (choosenString > stringCounter)
         {
-            printf("Слишком большое значение");
+            printf("Слишком большое значение");// Если число введенное пользователем больше чем есть, то вводим другом
             continue;
         }
-        for (int counter = stringBeginPos[choosenString-1]; buf[counter]!='\n'; counter++)
+        for (int counter = stringBeginPos[choosenString-1]; buf[counter]!='\n'; counter++) // Если успешно, то выводим строку
             printf("%c", buf[counter]);
     }
     return(0);
