@@ -29,7 +29,7 @@ int main(void)
     {
         if ((buf[i]=='\n')  ) // Если мы находим новую строку,то 
         {
-            stringBeginPos[localStringCounter++] = i + 1;Устанавилваем начало строки
+            stringBeginPos[localStringCounter++] = i + 1;//Устанавилваем начало строки
         }
     }
 
