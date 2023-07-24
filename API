@@ -1,0 +1,138 @@
+ 
+
+<?php
+class API {
+
+    public function addPost()
+    {
+         // Определение параметров запроса
+        $params = array(
+            'userId' => '1',
+            'title' => 'foo',
+            'body' => 'bzz',
+         );
+        
+         $CurlOptions = [
+            CURLOPT_URL            => 'https://jsonplaceholder.typicode.com/posts',
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_FOLLOWLOCATION => 1,
+            CURLOPT_HTTPHEADER     => array( 'Content-Type' => 'application/json' ),
+            CURLOPT_POSTFIELDS     => json_encode($params),
+            CURLOPT_FAILONERROR    => 1,
+        ];
+        return $this->sendToAPI($CurlOptions);
+    }
+
+    public function editPost()
+    {
+        // Определение параметров запроса
+        $params = array(
+            'userId' => '1',
+            'id' => '1',
+            'title' => 'foo',
+            'body' => 'bzz',
+         );
+         
+         $CurlOptions = [
+            CURLOPT_URL            => 'https://jsonplaceholder.typicode.com/posts/1',
+            CURLOPT_CUSTOMREQUEST  => 'PUT',
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_FOLLOWLOCATION => 1,
+            CURLOPT_HTTPHEADER     => array( 'Content-Type' => 'application/json' ),
+            CURLOPT_POSTFIELDS     => json_encode($params),
+            CURLOPT_FAILONERROR    => 1,
+        ];
+        return $this->sendToAPI($CurlOptions);
+    }
+
+    public function deletePost()
+    {
+        // Определение параметров запроса
+        $CurlOptions = [
+            CURLOPT_URL            => 'https://jsonplaceholder.typicode.com/posts/1',
+            CURLOPT_CUSTOMREQUEST  => 'DELETE',
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_FOLLOWLOCATION => 1,
+            CURLOPT_HTTPHEADER     => array( 'Content-Type' => 'application/json' ),
+            CURLOPT_FAILONERROR    => 1,
+        ];
+        return $this->sendToAPI($CurlOptions);
+    }
+    
+    protected function sendToAPI($CurlOptions)
+    {
+        // Инициализация запроса
+        $ch = curl_init();    
+        // установка параметров сеанса
+        curl_setopt_array( $ch, $CurlOptions );
+        // Выполнение запроса, в переменной хранится ответ от сервера
+        $data = curl_exec($ch);
+        $info = curl_getinfo($ch);
+        if (curl_errno($ch) || substr($info['http_code'],0,1) !== '2') {
+            // обработка ошибки, 
+            // желательно пользовательским исключением, 
+            // у которого есть свойства для $data и $info
+            var_export(curl_error($ch));
+            var_export($data);
+            var_export($info);
+        }
+        var_export($data);
+        curl_close($ch);
+    }
+
+    
+
+    protected function getToAPI($url )
+    {
+       
+          // Определение параметров запроса
+    $CurlOptions = [
+        CURLOPT_URL            => $url,
+        CURLOPT_HTTPGET        => 1,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_FOLLOWLOCATION => 1,
+        CURLOPT_HTTPHEADER     => array( 'Content-Type' => 'application/json' ),
+    ];
+        // Инициализация запроса
+        $ch = curl_init();    
+        // установка параметров сеанса
+        curl_setopt_array( $ch, $CurlOptions );
+        // Выполнение запроса, в переменной хранится ответ от сервера
+        $data = curl_exec($ch);
+        $info = curl_getinfo($ch);
+        if (curl_errno($ch) || substr($info['http_code'],0,1) !== '2') {
+            // обработка ошибки, 
+            // желательно пользовательским исключением, 
+            // у которого есть свойства для $data и $info
+            var_export(curl_error($ch));
+            var_export($data);
+            var_export($info);
+        }
+        var_export($data);
+
+        curl_close($ch);
+    }
+
+    public function getPost()
+    {
+        return $this->getToAPI('https://jsonplaceholder.typicode.com/posts?userId=1');
+    }
+
+    public function getUsers()
+    {
+        return $this->getToAPI('https://jsonplaceholder.typicode.com/users');
+    }
+
+    public function getTodos()
+    {
+        return $this->getToAPI('https://jsonplaceholder.typicode.com/todos');
+    }
+
+    
+}
+
+$obj = new API;
+echo $obj->editPost();
+
+?>
